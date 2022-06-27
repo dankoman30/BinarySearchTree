@@ -69,3 +69,26 @@ void BST::PrintInOrderPrivate(node* Ptr) { // recursively traverse the tree from
 		cout << "The tree is empty\n";
 	}
 }
+
+BST::node* BST::ReturnNode(int key) {
+	return ReturnNodePrivate(key, root);
+}
+
+BST::node* BST::ReturnNodePrivate(int key, node* Ptr) {
+	if (Ptr != NULL) { // if the pointer is pointing to something
+		if (Ptr->key == key) { // compare to the key we're passing in. if it's identical, we've found the node that we want
+			return Ptr; // so, return the pointer that's pointing to the current node
+		}
+		else { // do some recursion 
+			if (key < Ptr->key) { // check if it's LESS than the current pointer's key.  if so, TRAVERSE LEFT.
+				return ReturnNodePrivate(key, Ptr->left); // Try again.  Recursively call ReturnNodePrivate with current node's LEFT child.
+			}
+			else { // since we already checked for equality, the only possibility remaining is GREATER than the current key. So,
+				return ReturnNodePrivate(key, Ptr->right); // Try again. Recursively call ReturnNodePrivate with current node's RIGHT child.
+			}
+		}
+	}
+	else { // null pointer.  return it.
+		return NULL;
+	}
+}
