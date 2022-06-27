@@ -50,3 +50,22 @@ void BST::AddLeafPrivate(int key, node* Ptr) {
 		cout << "The key " << key << " has already been added to the tree\n"; // warn the user
 	}
 }
+
+void BST::PrintInOrder() {
+	PrintInOrderPrivate(root);
+}
+
+void BST::PrintInOrderPrivate(node* Ptr) { // recursively traverse the tree from lowest to highest value
+	if (root != NULL) { // check to see if there's anything in the tree
+		if (Ptr->left != NULL) { // if left is pointing to something, it's possible to traverse left
+			PrintInOrderPrivate(Ptr->left); // try again.  Recursively call PrintInOrderPrivate, passing pointer to the current node's left child
+		}
+		cout << Ptr->key << " "; // print the current key
+		if (Ptr->right != NULL) { // if right is pointing to something, it's possible to traverse right
+			PrintInOrderPrivate(Ptr->right); // try again.  Recursively call PrintInOrderPrivate, passing pointer to the current node's right child
+		}
+	}
+	else {
+		cout << "The tree is empty\n";
+	}
+}
