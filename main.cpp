@@ -24,5 +24,12 @@ int main() {
 
 	cout << endl;
 
+	myTree.PrintChildren(myTree.ReturnRootKey());
+
+	for (int i = 0; i < 16; i++) {
+		myTree.PrintChildren(TreeKeys[i]); // print the children for every tree node
+		cout << endl;
+	}
+
 	return 0;
 }

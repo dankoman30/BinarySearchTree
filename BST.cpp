@@ -92,3 +92,30 @@ BST::node* BST::ReturnNodePrivate(int key, node* Ptr) {
 		return NULL;
 	}
 }
+
+int BST::ReturnRootKey() {
+	if (root != NULL) {
+		return root->key;
+	}
+	else {
+		return -666;
+	}
+}
+
+void BST::PrintChildren(int key) { // print the two children of the specified key
+	node* Ptr = ReturnNode(key); // create pointer that points to the node containing the key, if it exists
+
+	if (Ptr != NULL) { // only if the key was found in the tree will Ptr not be NULL
+		cout << "Parent Node = " << Ptr->key << endl;
+
+		Ptr->left == NULL ? // check left child for null
+			cout << "Left Child = NULL\n" :
+			cout << "Left Child = " << Ptr->left->key << endl; // print the left child's key
+		Ptr->right == NULL ? // check right child for null
+			cout << "Right Child = NULL\n" :
+			cout << "Right Child = " << Ptr->right->key << endl; // print the right child's key
+	}
+	else { // if it's NULL, it does not exist in the tree
+		cout << "Key " << key << " not found in the tree\n";
+	}
+}
