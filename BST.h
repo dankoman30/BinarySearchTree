@@ -13,6 +13,7 @@ private:
 	void AddLeafPrivate(int key, node*  Ptr);
 	void PrintInOrderPrivate(node* Ptr);
 	node* ReturnNodePrivate(int key, node* Ptr);
+	int FindSmallestPrivate(node* Ptr);
 
 public:
 
@@ -23,4 +24,5 @@ public:
 	node* ReturnNode(int key);
 	int ReturnRootKey();
 	void PrintChildren(int key);
+	int FindSmallest();
 };

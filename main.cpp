@@ -31,5 +31,7 @@ int main() {
 		cout << endl;
 	}
 
+	cout << "The smallest key in the tree is " << myTree.FindSmallest() << endl;
+
 	return 0;
 }

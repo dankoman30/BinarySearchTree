@@ -119,3 +119,23 @@ void BST::PrintChildren(int key) { // print the two children of the specified ke
 		cout << "Key " << key << " not found in the tree\n";
 	}
 }
+
+int BST::FindSmallest() {
+	return FindSmallestPrivate(root); // call find smallest with the root node
+}
+
+int BST::FindSmallestPrivate(node* Ptr) {
+	if (root == NULL) { // if tree is empty
+		cout << "The tree is empty\n";
+		return -666;
+	}
+	else {
+		if (Ptr->left != NULL) { // if it's possible to traverse LEFT, do it.
+			return FindSmallestPrivate(Ptr->left); // only go left.  it's gotta be smaller.
+		}
+		else { // else, only larger keys exist, so we are currently on the smallest key.  Return it.
+			return Ptr->key;
+		}
+	}
+}
+
