@@ -124,7 +124,7 @@ int BST::FindSmallest() {
 	return FindSmallestPrivate(root); // call find smallest with the root node
 }
 
-int BST::FindSmallestPrivate(node* Ptr) {
+int BST::FindSmallestPrivate(node* Ptr) { // here, we are finding the smallest node in specified node's right subtree
 	if (root == NULL) { // if tree is empty
 		cout << "The tree is empty\n";
 		return -666;
@@ -139,3 +139,32 @@ int BST::FindSmallestPrivate(node* Ptr) {
 	}
 }
 
+void BST::RemoveNode(int key) {
+	RemoveNodePrivate(key, root); // start recursion at root
+}
+
+void BST::RemoveNodePrivate(int key, node* parent) {
+	if (root != NULL) { // check if tree is empty
+		if (root->key == key) { // is there a match at root? if so, we need to reconstruct the tree...
+			// RemoveRootMatch(); (write this function later)
+		}
+		else { // look at left child
+			if (key < parent->key && parent->left != NULL) { // if the key that we want to remove has a value less than the current node's key, we want to look down the left pointer, as long as it's not null
+				parent->left->key == key ? // if parent's left key is equal to the key we want to delete,
+					RemoveMatch(parent, parent->left, true) : // remove it from the tree, passing true as it IS a LEFT
+					RemoveNodePrivate(key, parent->left); // otherwise, left node becomes parent node in next recursive iteration.
+			}
+			else if (key > parent->key && parent->right != NULL) { // if the key that we want to remove has a value greater than the current node's key, we want to look down the right pointer, as long as it's not null
+				parent->right->key == key ? // if parent's right key is equal to the key we want to delete,
+					RemoveMatch(parent, parent->right, false) : // remove it from the tree, passing false as it's not a LEFT
+					RemoveNodePrivate(key, parent->right); // otherwise, right node becomes parent node in next recursive iteration.
+			}
+			else { // the key that we're looking for is not in the tree
+				cout << "The key " << key << " was not found in the tree\n";
+			}
+		}
+	}
+	else { // tree is empty
+		cout << "The tree is empty\n";
+	}
+}
