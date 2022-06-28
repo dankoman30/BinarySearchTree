@@ -212,3 +212,49 @@ void BST::RemoveRootMatch() { // only used for removing the root node and recons
 		cout << "Cannot remove root on an empty tree!\n";
 	}
 }
+
+void BST::RemoveMatch(node* parent, node* match, bool left) {
+	if (root != NULL) { // verify tree isn't empty
+		node* delPtr;
+		int matchKey = match->key;
+		int smallestInRightSubtree; // used if node we're deleting has 2 children
+
+		// case 0 - no children
+		if (match->left == NULL && match->right == NULL) { // no children
+			delPtr = match;
+			left == true ? // if it's the lef t
+				parent->left = NULL : // if it's
+				parent->right = NULL;
+			delete delPtr;
+			cout << "The node containing key " << matchKey << " was removed.\n";
+		}
+
+		// case 1a - matching node has only 1 child
+		else if (match->left == NULL && match->right != NULL) { // right child only
+			left == true ? parent->left = match->right : parent->right = match->right; // 
+			match->right = NULL; // disconnect from tree
+			delPtr = match; // set pointer to delete to the match
+			delete delPtr; // delete it
+			cout << "The node containing key " << matchKey << " was removed.\n";
+		}
+		// case 1b - matching node has only 1 child
+		else if (match->left != NULL && match->right == NULL) { // left child only
+			left == true ? parent->left = match->left : parent->right = match->left; // 
+			match->left = NULL; // disconnect from tree
+			delPtr = match; // set pointer to delete to the match
+			delete delPtr; // delete it
+			cout << "The node containing key " << matchKey << " was removed.\n";
+		}
+
+		// case 2 - matching node has 2 children
+		else {
+			smallestInRightSubtree = FindSmallestPrivate(match->right);
+			RemoveNodePrivate(smallestInRightSubtree, match); // start searching for key at match (the matching node)
+			match->key = smallestInRightSubtree; // overwrite value with smallest value in right subtree
+		}
+	}
+	else {
+		cout << "Can't remove match from empty tree!!\n";
+	}
+
+}
