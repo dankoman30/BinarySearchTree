@@ -146,7 +146,7 @@ void BST::RemoveNode(int key) {
 void BST::RemoveNodePrivate(int key, node* parent) {
 	if (root != NULL) { // check if tree is empty
 		if (root->key == key) { // is there a match at root? if so, we need to reconstruct the tree...
-			// RemoveRootMatch(); (write this function later)
+			RemoveRootMatch();
 		}
 		else { // look at left child
 			if (key < parent->key && parent->left != NULL) { // if the key that we want to remove has a value less than the current node's key, we want to look down the left pointer, as long as it's not null
@@ -166,5 +166,49 @@ void BST::RemoveNodePrivate(int key, node* parent) {
 	}
 	else { // tree is empty
 		cout << "The tree is empty\n";
+	}
+}
+
+void BST::RemoveRootMatch() { // only used for removing the root node and reconstructing the tree
+	if (root != NULL) { // check for empty tree
+		node* delPtr = root; // define pointer to delete as root
+		int rootKey = root->key; // get root key
+		int smallestInRightSubtree; // declare int for smallest key in right subtree (to be new root later)
+
+		// case 0 - root node has 0 children
+		if (root->left == NULL && root->right == NULL) {
+			root = NULL;
+			delete delPtr;
+		}
+
+		// case 1a - root node has 1 child
+		else if (root->left == NULL && root->right != NULL) { // root has right child but no left child
+			root = root->right; // root's right is the new root
+			delPtr->right = NULL; // disconnect old root from tree
+			delete delPtr;
+			cout << "The root node with key " << rootKey << " was deleted. " <<
+				"The new root contains key " << root->key << endl; // inform user
+		}
+
+		// case 1b - root node has 1 child
+		else if (root->left != NULL && root->right == NULL) { // root has left child but no right child
+			root = root->left; // root's left is the new root
+			delPtr->left = NULL; // disconnect old root from tree
+			delete delPtr;
+			cout << "The root node with key " << rootKey << " was deleted. " <<
+				"The new root contains key " << root->key << endl; // inform user
+		}
+
+		// case 2 - root node has 2 children
+		else {
+			smallestInRightSubtree = FindSmallestPrivate(root->right); // find the smallest in right subtree
+			RemoveNodePrivate(smallestInRightSubtree, root); // delete smallest in root's right subtree
+			root->key = smallestInRightSubtree; // overwrite root key with smallest key in its right subtree
+			cout << "The root key containing key " << rootKey <<
+				" was overwritten with key " << root->key << endl; // inform user
+		}
+	}
+	else { // tree is empty
+		cout << "Cannot remove root on an empty tree!\n";
 	}
 }

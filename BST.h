@@ -15,6 +15,7 @@ private:
 	node* ReturnNodePrivate(int key, node* Ptr);
 	int FindSmallestPrivate(node* Ptr);
 	void RemoveNodePrivate(int key, node* parent);
+	void RemoveRootMatch();
 
 public:
 
