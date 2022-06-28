@@ -17,14 +17,16 @@ private:
 	void RemoveNodePrivate(int key, node* parent);
 	void RemoveRootMatch();
 	void RemoveMatch(node* parent, node* match, bool left);
+	node* CreateLeaf(int key);
+	node* ReturnNode(int key);
+	void RemoveSubtree(node* Ptr);
 
 public:
 
 	BST();
-	node* CreateLeaf(int key);
+	~BST(); // deconstructor to avoid memleaks
 	void AddLeaf(int key);
 	void PrintInOrder();
-	node* ReturnNode(int key);
 	int ReturnRootKey();
 	void PrintChildren(int key);
 	int FindSmallest();

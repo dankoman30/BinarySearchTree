@@ -258,3 +258,21 @@ void BST::RemoveMatch(node* parent, node* match, bool left) {
 	}
 
 }
+
+BST::~BST() { // using tilde operator (~), this function is called whenever our BST object goes out of scope. This is a deconstructor / destructor
+	RemoveSubtree(root); // call remove subtree on root node
+}
+
+void BST::RemoveSubtree(node* Ptr) { // post-order traversal to remove all the nodes
+	if (Ptr != NULL) { // check for null
+		if (Ptr->left != NULL) {
+			RemoveSubtree(Ptr->left); // recursively move down left subtree
+		}
+		if (Ptr->right != NULL) {
+			RemoveSubtree(Ptr->right); // recursively move down right subtree
+		}
+		// at this point, we've gone as far left and as far right as we possibly can
+		cout << "Deleting the node containing key " << Ptr->key << endl;
+		delete Ptr;
+	}
+}
