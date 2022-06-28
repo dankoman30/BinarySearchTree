@@ -11,6 +11,8 @@ int main() {
 
 	BST myTree; // create binary search tree object
 
+	int input = 0;
+
 	cout << "Printing the tree in order\nBEFORE ADDING NUMBERS\n";
 	myTree.PrintInOrder();
 
@@ -32,6 +34,19 @@ int main() {
 	}
 
 	cout << "The smallest key in the tree is " << myTree.FindSmallest() << endl;
+
+	cout << "Enter a key value you want to delete. Enter -1 to stop\n";
+
+	while (input != -1) {
+		cout << "Delete node: ";
+		cin >> input;
+		if (input != -1) {
+			cout << endl;
+			myTree.RemoveNode(input);
+			myTree.PrintInOrder();
+			cout << endl;
+		}
+	}
 
 	return 0;
 }
