@@ -1,11 +1,16 @@
 #include <iostream>
 #include <cstdlib>
-#include<time.h>
+#include <time.h>
 #include <memory>
+#include <chrono>
 
 #include "BST.h"
 
 using namespace std;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::duration;
+using std::chrono::milliseconds;
 
 int getNumberFromUser(string message) { // function to get input from user
 	cout << endl << endl << message + ": ";
@@ -22,7 +27,14 @@ int getNumberFromUser(string message) { // function to get input from user
 	return entry;
 }
 
-int mainMenu() {
+auto getTime() { // for performance analysis
+	return high_resolution_clock::now();
+}
+
+int mainMenu(bool performanceAnalysisMode) {
+	std::chrono::steady_clock::time_point startTime, endTime; // for performance analysis
+	duration<double, std::milli> runtimeMillis;
+
 	BST tree; // instantiate BST object with scope in this function
 	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE");
 	if (nodes < 1) { // check for 0 or negative cases
@@ -30,11 +42,22 @@ int mainMenu() {
 	}
 	else {
 		cout << endl << "Adding " << nodes << " nodes with random values between 1 and 1000 to the tree.\n";
+
+		startTime = getTime(); // for performance analysis
+
 		// add nodes to tree
 		for (int i = 0; i < nodes; i++) {
 			int value = (rand() % 1000) + 1; // generate random number (between 1 and 1000)
 			cout << "\nAdding a node with value " << value << " to the tree.\n";
 			tree.AddLeaf(value); //  on each loop iteration to add to the tree
+		}
+
+		endTime = getTime(); // for performance analysis
+		if (performanceAnalysisMode) {
+			runtimeMillis = endTime - startTime;
+			cout << "\n*************************************************************\n";
+			cout << "\nPERFORMANCE ANALYSIS: THAT OPERATION TOOK " << runtimeMillis.count() << " ms.\n";
+			cout << "\n*************************************************************\n\n";
 		}
 	}
 
@@ -97,7 +120,12 @@ int mainMenu() {
 int main() {
 	srand(time(0)); // at program start, use time as a seed for random number generator
 
-	while(mainMenu() != 0); // loop main menu until it returns a 0
+	bool performanceAnalysisMode;
+	cout << "\nActivate performance analysis mode?\n1. yes\n2. no\n\n";
+	performanceAnalysisMode = getNumberFromUser("YOUR CHOICE") == 1 ? true : false; // set boolean for performance analysis mode based on user input
+
+
+	while(mainMenu(performanceAnalysisMode) != 0); // loop main menu until it returns a 0
 
 	return 0;
 }
