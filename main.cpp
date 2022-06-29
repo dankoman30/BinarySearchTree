@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstdlib>
+#include<time.h>
+#include <memory>
 
 #include "BST.h"
 
@@ -63,13 +65,28 @@ int getNumberFromUser(string message) { // function to get input from user
 	return entry;
 }
 
-void mainMenu() {
+int mainMenu() {
+	BST tree; // instantiate BST object with scope in this function
+	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE");
+	if (nodes < 1) { // check for 0 or negative cases
+		cout << endl << "Cannot add " << nodes << " nodes to the tree. Number of nodes must be greater than 0. The tree is empty.\n";
+	}
+	else {
+		cout << endl << "Adding " << nodes << " nodes with random values between 1 and 1000 to the tree.\n";
+		// add nodes to tree
+		for (int i = 0; i < nodes; i++) {
+			int value = (rand() % 1000) + 1; // generate random number (between 1 and 1000)
+			cout << "\nAdding a node with value " << value << " to the tree.\n";
+			tree.AddLeaf(value); //  on each loop iteration to add to the tree
+		}
+	}
+
 	for (;;) { // main loop
 
-		BST tree; // instantiate new BST object
+		int smallest, largest; // declare smallest and largest ints
 
-		cout << endl << "What would you like to do?" <<
-			"1. Create new tree with specified number of nodes with random values" <<
+		cout << endl << "What would you like to do?" << endl <<
+			"1. Create new tree with specified number of nodes with random values" << endl <<
 			"2. " << endl <<
 			"3. Print the two children of node with specified value" << endl << 
 			"4. Insert a node into the tree" << endl << 
@@ -82,28 +99,31 @@ void mainMenu() {
 		int choice = getNumberFromUser("ENTER A CHOICE");
 		switch (choice) {
 		case 1: // new tree with specified number of nodes with random values
-			
-			continue;
+			return 1; // return 1 to run the main menu again, creating a new tree in the process (old tree will be destroyed once out of scope)
 		case 2: // 
 			
 			continue;
 		case 3: // print 2 children of specified node
-			
+			tree.PrintChildren(getNumberFromUser("ENTER THE VALUE OF THE NODE WHOSE CHILDREN YOU'D LIKE TO PRINT"));
 			continue;
 		case 4: // insert value into tree
 			tree.AddLeaf(getNumberFromUser("ENTER A VALUE TO ADD TO THE TREE"));
 			continue;
 		case 5: // delete a node
-			
+			tree.RemoveNode(getNumberFromUser("ENTER THE VALUE OF THE NODE YOU'D LIKE TO REMOVE FROM THE TREE"));
 			continue;
 		case 6: // find minimum
-			
+			smallest = tree.FindSmallest();
+			smallest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
+				cout << "\nThe minimum value in the tree is " << smallest << endl;
 			continue;
 		case 7: // find maximum
-			
+			largest = tree.FindLargest();
+			largest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
+				cout << "\nThe maximum value in the tree is " << largest << endl;
 			continue;
 		case 8: // print in order sorted
-			
+			tree.PrintInOrder();
 			continue;
 		case 9: // print in order of traversal
 			
@@ -114,11 +134,15 @@ void mainMenu() {
 		}
 		break; // exit program
 	}
+	return 0;
 }
 
 int main() {
+	srand(time(0)); // at program start, use time as a seed for random number generator
 
-	demo();
+	// demo();
+
+	while(mainMenu() != 0); // loop main menu until it returns a 0
 
 	return 0;
 }

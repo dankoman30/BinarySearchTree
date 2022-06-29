@@ -139,6 +139,25 @@ int BST::FindSmallestPrivate(node* Ptr) { // here, we are finding the smallest n
 	}
 }
 
+int BST::FindLargest() {
+	return FindLargestPrivate(root); // call find smallest with the root node
+}
+
+int BST::FindLargestPrivate(node* Ptr) { // here, we are finding the smallest node in specified node's right subtree
+	if (root == NULL) { // if tree is empty
+		cout << "The tree is empty\n";
+		return -666;
+	}
+	else {
+		if (Ptr->right != NULL) { // if it's possible to traverse RIGHT, do it.
+			return FindLargestPrivate(Ptr->right); // only go right.  it's gotta be larger.
+		}
+		else { // else, only smaller keys exist, so we are currently on the largest key.  Return it.
+			return Ptr->key;
+		}
+	}
+}
+
 void BST::RemoveNode(int key) {
 	RemoveNodePrivate(key, root); // start recursion at root
 }

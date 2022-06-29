@@ -14,6 +14,7 @@ private:
 	void PrintInOrderPrivate(node* Ptr);
 	node* ReturnNodePrivate(int key, node* Ptr);
 	int FindSmallestPrivate(node* Ptr);
+	int FindLargestPrivate(node* Ptr);
 	void RemoveNodePrivate(int key, node* parent);
 	void RemoveRootMatch();
 	void RemoveMatch(node* parent, node* match, bool left);
@@ -30,6 +31,7 @@ public:
 	int ReturnRootKey();
 	void PrintChildren(int key);
 	int FindSmallest();
+	int FindLargest();
 	void RemoveNode(int key);
 
 };
