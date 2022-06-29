@@ -63,7 +63,7 @@ int mainMenu(bool performanceAnalysisMode) {
 
 		// add nodes to tree
 		for (int i = 0; i < nodes; i++) {
-			int value = rand(); // generate random number
+			int value = ((rand()+1) * (rand()+1) + rand()); // generate really random number
 			cout << "\nAdding a node with value " << value << " to the tree.\n";
 			tree.AddNode(value); //  on each loop iteration to add to the tree
 		}
