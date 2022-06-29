@@ -63,7 +63,7 @@ int mainMenu(bool performanceAnalysisMode) {
 
 	for (;;) { // main loop
 
-		int smallest, largest; // declare smallest and largest ints
+		int minimum, maximum; // declare minimum and maximum ints
 
 		cout << endl << "What would you like to do?" << endl <<
 			"1. Create new tree with specified number of nodes with random values" << endl <<
@@ -90,14 +90,14 @@ int mainMenu(bool performanceAnalysisMode) {
 			tree.RemoveNode(getNumberFromUser("ENTER THE VALUE OF THE NODE YOU'D LIKE TO REMOVE FROM THE TREE"));
 			continue;
 		case 5: // find minimum
-			smallest = tree.GetMinimumKey();
-			smallest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
-				cout << "\nThe minimum value in the tree is " << smallest << endl;
+			minimum = tree.GetMinimumKey();
+			minimum == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
+				cout << "\nThe minimum value in the tree is " << minimum << endl;
 			continue;
 		case 6: // find maximum
-			largest = tree.GetMaximumKey();
-			largest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
-				cout << "\nThe maximum value in the tree is " << largest << endl;
+			maximum = tree.GetMaximumKey();
+			maximum == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
+				cout << "\nThe maximum value in the tree is " << maximum << endl;
 			continue;
 		case 7: // preorder - root, left, right
 			tree.PrintPreorder();
@@ -105,7 +105,7 @@ int mainMenu(bool performanceAnalysisMode) {
 		case 8: // inorder - left, root, right
 			tree.PrintInorder();
 			continue;
-		case 9: // 
+		case 9: // postorder - left, right, root
 			tree.PrintPostorder();
 			continue;
 		case 0: // exit
