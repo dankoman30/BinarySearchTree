@@ -33,6 +33,8 @@ public:
 	}
 };
 
+performanceAnalyzer pa; // instantiate performance analyzer
+
 int getNumberFromUser(string message) { // function to get input from user
 	cout << endl << endl << message + ": ";
 	int entry;
@@ -45,11 +47,11 @@ int getNumberFromUser(string message) { // function to get input from user
 		cin >> entry;
 	}
 	cout << endl;
+	pa.start(); // PERFORMANCE ANALYSIS (START HERE IMMEDIATELY AFTER TAKING INPUT FROM THE USER
 	return entry;
 }
 
 int mainMenu(bool performanceAnalysisMode) {
-	performanceAnalyzer pa;
 
 	BST tree; // instantiate BST object with scope in this function
 	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE");
@@ -57,19 +59,17 @@ int mainMenu(bool performanceAnalysisMode) {
 		cout << endl << "Cannot add " << nodes << " nodes to the tree. Number of nodes must be greater than 0. The tree is empty.\n";
 	}
 	else {
-		cout << endl << "Adding " << nodes << " nodes with random values between 1 and 1000 to the tree.\n";
-
-		pa.start(); // start the performance analyzer timer
+		cout << endl << "Adding " << nodes << " nodes with random values to the tree.\n";
 
 		// add nodes to tree
 		for (int i = 0; i < nodes; i++) {
-			int value = (rand() % 1000) + 1; // generate random number (between 1 and 1000)
+			int value = rand(); // generate random number
 			cout << "\nAdding a node with value " << value << " to the tree.\n";
 			tree.AddNode(value); //  on each loop iteration to add to the tree
 		}
 
 		if (performanceAnalysisMode) {
-			pa.end(); // stop the performance analyzer timer
+			pa.end(); // PERFORMANCE ANALYSIS
 		}
 	}
 
@@ -78,16 +78,17 @@ int mainMenu(bool performanceAnalysisMode) {
 		int minimum, maximum; // declare minimum and maximum ints
 
 		cout << endl << "What would you like to do?" << endl <<
-			"1. Create new tree with specified number of nodes with random values" << endl <<
-			"2. Print the two children of node with specified value" << endl <<
-			"3. Insert a node into the tree" << endl << 
-			"4. Delete a node from the tree" << endl << 
-			"5. Find minimum value in the tree" << endl <<
-			"6. Find maximum value in the tree" << endl <<
-			"7. Print tree with Preorder Traversal (root, left, right)" << endl << 
-			"8. Print tree with Inorder Traversal (left, root, right)" << endl << 
-			"9. Print tree with Postorder Traversal (left, right, root)" << endl << 
-			"0. EXIT" << endl << endl;
+			"1.  Create new tree with specified number of nodes with random values" << endl <<
+			"2.  Print the two children of node with specified value" << endl <<
+			"3.  Insert a node into the tree" << endl << 
+			"4.  Delete a node from the tree" << endl << 
+			"5.  Find minimum value in the tree" << endl <<
+			"6.  Find maximum value in the tree" << endl <<
+			"7.  Print tree with Preorder Traversal (root, left, right)" << endl << 
+			"8.  Print tree with Inorder Traversal (left, root, right)" << endl <<
+			"9.  Print tree with Postorder Traversal (left, right, root)" << endl <<
+			"10. Print tree with Postorder Traversal (left, right, root)" << endl <<
+			"0.  EXIT" << endl << endl;
 		int choice = getNumberFromUser("ENTER A CHOICE");
 		switch (choice) {
 		case 1: // new tree with specified number of nodes with random values
@@ -113,14 +114,31 @@ int mainMenu(bool performanceAnalysisMode) {
 			continue;
 		case 7: // preorder - root, left, right
 			tree.PrintPreorder();
+			if (performanceAnalysisMode) {
+				pa.end(); // PERFORMANCE ANALYSIS
+			}
 			continue;
 		case 8: // inorder - left, root, right
 			tree.PrintInorder();
+			if (performanceAnalysisMode) {
+				pa.end(); // PERFORMANCE ANALYSIS
+			}
 			continue;
 		case 9: // postorder - left, right, root
 			tree.PrintPostorder();
+			if (performanceAnalysisMode) {
+				pa.end(); // PERFORMANCE ANALYSIS
+			}
 			continue;
-		case 0: // exit
+		case 10: // delete all nodes
+			while (tree.GetRootKey() != -666) {
+				tree.RemoveNode(tree.GetRootKey());
+			}
+			if (performanceAnalysisMode) {
+				pa.end(); // PERFORMANCE ANALYSIS
+			}
+			cout << endl << "ALL NODES HAVE BEEN DELETED FROM THE TREE AND IT'S NOW EMPTY!" << endl;
+		default: // exit
 			cout << "\n\nBYE!!!\n\n";
 			break; // exit loop
 		}
