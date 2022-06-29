@@ -12,6 +12,27 @@ using std::chrono::duration_cast;
 using std::chrono::duration;
 using std::chrono::milliseconds;
 
+class performanceAnalyzer {
+private:
+	std::chrono::steady_clock::time_point startTime, endTime;
+	duration<double, std::milli> runtimeMillis;
+
+	auto getTime() {
+		return high_resolution_clock::now();
+	}
+public:
+	void start() {
+		startTime = getTime();
+	}
+	void end() {
+		endTime = getTime();
+		runtimeMillis = endTime - startTime;
+		cout << "\n*************************************************************\n";
+		cout << "\nPERFORMANCE ANALYSIS: THAT OPERATION TOOK " << runtimeMillis.count() << " ms.\n";
+		cout << "\n*************************************************************\n\n";
+	}
+};
+
 int getNumberFromUser(string message) { // function to get input from user
 	cout << endl << endl << message + ": ";
 	int entry;
@@ -27,13 +48,8 @@ int getNumberFromUser(string message) { // function to get input from user
 	return entry;
 }
 
-auto getTime() { // for performance analysis
-	return high_resolution_clock::now();
-}
-
 int mainMenu(bool performanceAnalysisMode) {
-	std::chrono::steady_clock::time_point startTime, endTime; // for performance analysis
-	duration<double, std::milli> runtimeMillis;
+	performanceAnalyzer pa;
 
 	BST tree; // instantiate BST object with scope in this function
 	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE");
@@ -43,7 +59,7 @@ int mainMenu(bool performanceAnalysisMode) {
 	else {
 		cout << endl << "Adding " << nodes << " nodes with random values between 1 and 1000 to the tree.\n";
 
-		startTime = getTime(); // for performance analysis
+		pa.start(); // start the performance analyzer timer
 
 		// add nodes to tree
 		for (int i = 0; i < nodes; i++) {
@@ -52,12 +68,8 @@ int mainMenu(bool performanceAnalysisMode) {
 			tree.AddNode(value); //  on each loop iteration to add to the tree
 		}
 
-		endTime = getTime(); // for performance analysis
 		if (performanceAnalysisMode) {
-			runtimeMillis = endTime - startTime;
-			cout << "\n*************************************************************\n";
-			cout << "\nPERFORMANCE ANALYSIS: THAT OPERATION TOOK " << runtimeMillis.count() << " ms.\n";
-			cout << "\n*************************************************************\n\n";
+			pa.end(); // stop the performance analyzer timer
 		}
 	}
 
