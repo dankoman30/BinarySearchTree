@@ -138,6 +138,7 @@ int mainMenu(bool performanceAnalysisMode) {
 				pa.end(); // PERFORMANCE ANALYSIS
 			}
 			cout << endl << "ALL NODES HAVE BEEN DELETED FROM THE TREE AND IT'S NOW EMPTY!" << endl;
+			continue;
 		default: // exit
 			cout << "\n\nBYE!!!\n\n";
 			break; // exit loop
