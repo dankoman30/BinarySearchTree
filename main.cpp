@@ -49,7 +49,7 @@ int mainMenu(bool performanceAnalysisMode) {
 		for (int i = 0; i < nodes; i++) {
 			int value = (rand() % 1000) + 1; // generate random number (between 1 and 1000)
 			cout << "\nAdding a node with value " << value << " to the tree.\n";
-			tree.AddLeaf(value); //  on each loop iteration to add to the tree
+			tree.AddNode(value); //  on each loop iteration to add to the tree
 		}
 
 		endTime = getTime(); // for performance analysis
@@ -81,32 +81,32 @@ int mainMenu(bool performanceAnalysisMode) {
 		case 1: // new tree with specified number of nodes with random values
 			return 1; // return 1 to run the main menu again, creating a new tree in the process (old tree will be destroyed once out of scope)
 		case 2: // print 2 children of specified node
-			tree.PrintChildren(getNumberFromUser("ENTER THE VALUE OF THE NODE WHOSE CHILDREN YOU'D LIKE TO PRINT"));
+			tree.PrintChildNodes(getNumberFromUser("ENTER THE VALUE OF THE NODE WHOSE CHILDREN YOU'D LIKE TO PRINT"));
 			continue;
 		case 3: // insert value into tree
-			tree.AddLeaf(getNumberFromUser("ENTER A VALUE TO ADD TO THE TREE"));
+			tree.AddNode(getNumberFromUser("ENTER A VALUE TO ADD TO THE TREE"));
 			continue;
 		case 4: // delete a node
 			tree.RemoveNode(getNumberFromUser("ENTER THE VALUE OF THE NODE YOU'D LIKE TO REMOVE FROM THE TREE"));
 			continue;
 		case 5: // find minimum
-			smallest = tree.FindSmallest();
+			smallest = tree.GetMinimumKey();
 			smallest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
 				cout << "\nThe minimum value in the tree is " << smallest << endl;
 			continue;
 		case 6: // find maximum
-			largest = tree.FindLargest();
+			largest = tree.GetMaximumKey();
 			largest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
 				cout << "\nThe maximum value in the tree is " << largest << endl;
 			continue;
 		case 7: // preorder - root, left, right
-			tree.PrintPreOrder();
+			tree.PrintPreorder();
 			continue;
 		case 8: // inorder - left, root, right
-			tree.PrintInOrder();
+			tree.PrintInorder();
 			continue;
 		case 9: // 
-			tree.PrintPostOrder();
+			tree.PrintPostorder();
 			continue;
 		case 0: // exit
 			cout << "\n\nBYE!!!\n\n";

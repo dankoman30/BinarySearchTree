@@ -10,17 +10,17 @@ private:
 
 	node* root;
 
-	void AddLeafPrivate(int key, node*  Ptr);
-	void PrintInOrderPrivate(node* Ptr);
-	void PrintPreOrderPrivate(node* Ptr);
-	void PrintPostOrderPrivate(node* Ptr);
-	node* ReturnNodePrivate(int key, node* Ptr);
-	int FindSmallestPrivate(node* Ptr);
-	int FindLargestPrivate(node* Ptr);
-	void RemoveNodePrivate(int key, node* parent);
-	void RemoveRootMatch();
-	void RemoveMatch(node* parent, node* match, bool left);
-	node* CreateLeaf(int key);
+	void PrivateAddNode(int key, node*  Ptr);
+	void PrivatePrintInorder(node* Ptr);
+	void PrivatePrintPreorder(node* Ptr);
+	void PrivatePrintPostorder(node* Ptr);
+	node* PrivateReturnNode(int key, node* Ptr);
+	int PrivateFindMinimum(node* Ptr);
+	int PrivateFindMaximum(node* Ptr);
+	void PrivateRemoveNode(int key, node* parent);
+	void RemoveKeyAtRoot();
+	void RemoveKey(node* parent, node* match, bool left);
+	node* CreateNode(int key);
 	node* ReturnNode(int key);
 	void RemoveSubtree(node* Ptr);
 
@@ -28,14 +28,14 @@ public:
 
 	BST();
 	~BST(); // deconstructor to avoid memleaks
-	void AddLeaf(int key);
-	void PrintInOrder();
-	void PrintPreOrder();
-	void PrintPostOrder();
-	int ReturnRootKey();
-	void PrintChildren(int key);
-	int FindSmallest();
-	int FindLargest();
+	void AddNode(int key);
+	void PrintInorder();
+	void PrintPreorder();
+	void PrintPostorder();
+	int GetRootKey();
+	void PrintChildNodes(int key);
+	int GetMinimumKey();
+	int GetMaximumKey();
 	void RemoveNode(int key);
 
 };
