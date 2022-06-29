@@ -87,46 +87,46 @@ int mainMenu() {
 
 		cout << endl << "What would you like to do?" << endl <<
 			"1. Create new tree with specified number of nodes with random values" << endl <<
-			"2. " << endl <<
-			"3. Print the two children of node with specified value" << endl << 
-			"4. Insert a node into the tree" << endl << 
-			"5. Delete a node from the tree" << endl <<
-			"6. Find minimum value in the tree" << endl <<
-			"7. Find maximum value in the tree" << endl << 
-			"8. Traverse the tree and return data in order of traversal" << endl << 
-			"9. Traverse the tree and return data in sorted order" << endl << 
+			"2. Print the two children of node with specified value" << endl <<
+			"3. Insert a node into the tree" << endl << 
+			"4. Delete a node from the tree" << endl << 
+			"5. Find minimum value in the tree" << endl <<
+			"6. Find maximum value in the tree" << endl <<
+			"7. Print tree with Preorder Traversal (root, left, right)" << endl << 
+			"8. Print tree with Inorder Traversal (left, root, right)" << endl << 
+			"9. Print tree with Postorder Traversal (left, right, root)" << endl << 
 			"0. EXIT" << endl << endl;
 		int choice = getNumberFromUser("ENTER A CHOICE");
 		switch (choice) {
 		case 1: // new tree with specified number of nodes with random values
 			return 1; // return 1 to run the main menu again, creating a new tree in the process (old tree will be destroyed once out of scope)
-		case 2: // 
-			
-			continue;
-		case 3: // print 2 children of specified node
+		case 2: // print 2 children of specified node
 			tree.PrintChildren(getNumberFromUser("ENTER THE VALUE OF THE NODE WHOSE CHILDREN YOU'D LIKE TO PRINT"));
 			continue;
-		case 4: // insert value into tree
+		case 3: // insert value into tree
 			tree.AddLeaf(getNumberFromUser("ENTER A VALUE TO ADD TO THE TREE"));
 			continue;
-		case 5: // delete a node
+		case 4: // delete a node
 			tree.RemoveNode(getNumberFromUser("ENTER THE VALUE OF THE NODE YOU'D LIKE TO REMOVE FROM THE TREE"));
 			continue;
-		case 6: // find minimum
+		case 5: // find minimum
 			smallest = tree.FindSmallest();
 			smallest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
 				cout << "\nThe minimum value in the tree is " << smallest << endl;
 			continue;
-		case 7: // find maximum
+		case 6: // find maximum
 			largest = tree.FindLargest();
 			largest == -666 ? cout << "\nOOPS...\n" : // if function returns -666, tree is empty
 				cout << "\nThe maximum value in the tree is " << largest << endl;
 			continue;
-		case 8: // print in order sorted
+		case 7: // preorder - root, left, right
+			tree.PrintPreOrder();
+			continue;
+		case 8: // inorder - left, root, right
 			tree.PrintInOrder();
 			continue;
-		case 9: // print in order of traversal
-			
+		case 9: // 
+			tree.PrintPostOrder();
 			continue;
 		case 0: // exit
 			cout << "\n\nBYE!!!\n\n";
@@ -139,8 +139,6 @@ int mainMenu() {
 
 int main() {
 	srand(time(0)); // at program start, use time as a seed for random number generator
-
-	// demo();
 
 	while(mainMenu() != 0); // loop main menu until it returns a 0
 

@@ -11,7 +11,6 @@ BST::BST() {
 	root = NULL; // make sure root is pointing to NULL
 }
 
-
 BST::node* BST::CreateLeaf(int key) {
 	node* n = new node;
 	n->key = key;
@@ -55,15 +54,68 @@ void BST::PrintInOrder() {
 	PrintInOrderPrivate(root);
 }
 
-void BST::PrintInOrderPrivate(node* Ptr) { // recursively traverse the tree from lowest to highest value
+void BST::PrintInOrderPrivate(node* Ptr) { // inorder traversal (left, root, right)
 	if (root != NULL) { // check to see if there's anything in the tree
+		// left
 		if (Ptr->left != NULL) { // if left is pointing to something, it's possible to traverse left
 			PrintInOrderPrivate(Ptr->left); // try again.  Recursively call PrintInOrderPrivate, passing pointer to the current node's left child
 		}
+
+		// root
 		cout << Ptr->key << " "; // print the current key
+
+		// right
 		if (Ptr->right != NULL) { // if right is pointing to something, it's possible to traverse right
 			PrintInOrderPrivate(Ptr->right); // try again.  Recursively call PrintInOrderPrivate, passing pointer to the current node's right child
 		}
+	}
+	else {
+		cout << "The tree is empty\n";
+	}
+}
+
+void BST::PrintPreOrder() {
+	PrintPreOrderPrivate(root);
+}
+
+void BST::PrintPreOrderPrivate(node* Ptr) { // preorder traversal (root, left, right)
+	if (root != NULL) { // check to see if there's anything in the tree
+		// root
+		cout << Ptr->key << " "; // print the current key
+
+		// left
+		if (Ptr->left != NULL) { // if left is pointing to something, it's possible to traverse left
+			PrintPreOrderPrivate(Ptr->left); // try again.  Recursively call PrintPreOrderPrivate, passing pointer to the current node's left child
+		}
+		
+		// right
+		if (Ptr->right != NULL) { // if right is pointing to something, it's possible to traverse right
+			PrintPreOrderPrivate(Ptr->right); // try again.  Recursively call PrintPreOrderPrivate, passing pointer to the current node's right child
+		}
+	}
+	else {
+		cout << "The tree is empty\n";
+	}
+}
+
+void BST::PrintPostOrder() {
+	PrintPostOrderPrivate(root);
+}
+
+void BST::PrintPostOrderPrivate(node* Ptr) { // postorder traversal (left, right, root)
+	if (root != NULL) { // check to see if there's anything in the tree
+		// left
+		if (Ptr->left != NULL) { // if left is pointing to something, it's possible to traverse left
+			PrintPostOrderPrivate(Ptr->left); // try again.  Recursively call PrintPostOrderPrivate, passing pointer to the current node's left child
+		}
+
+		// right
+		if (Ptr->right != NULL) { // if right is pointing to something, it's possible to traverse right
+			PrintPostOrderPrivate(Ptr->right); // try again.  Recursively call PrintPostOrderPrivate, passing pointer to the current node's right child
+		}
+
+		// root
+		cout << Ptr->key << " "; // print the current key
 	}
 	else {
 		cout << "The tree is empty\n";

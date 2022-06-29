@@ -12,6 +12,8 @@ private:
 
 	void AddLeafPrivate(int key, node*  Ptr);
 	void PrintInOrderPrivate(node* Ptr);
+	void PrintPreOrderPrivate(node* Ptr);
+	void PrintPostOrderPrivate(node* Ptr);
 	node* ReturnNodePrivate(int key, node* Ptr);
 	int FindSmallestPrivate(node* Ptr);
 	int FindLargestPrivate(node* Ptr);
@@ -28,6 +30,8 @@ public:
 	~BST(); // deconstructor to avoid memleaks
 	void AddLeaf(int key);
 	void PrintInOrder();
+	void PrintPreOrder();
+	void PrintPostOrder();
 	int ReturnRootKey();
 	void PrintChildren(int key);
 	int FindSmallest();
