@@ -3,6 +3,9 @@
 #include <time.h>
 #include <memory>
 #include <chrono>
+#include <algorithm>
+#include <random>
+#include <vector>
 
 #include "BST.h"
 
@@ -14,7 +17,7 @@ using std::chrono::milliseconds;
 
 class performanceAnalyzer {
 private:
-	std::chrono::steady_clock::time_point startTime, endTime;
+	std::chrono::steady_clock::time_point startTime, endTime; // PERFORMANCE ANALYSIS
 	duration<double, std::milli> runtimeMillis;
 
 	auto getTime() {
@@ -35,7 +38,7 @@ public:
 
 performanceAnalyzer pa; // instantiate performance analyzer
 
-int getNumberFromUser(string message) { // function to get input from user
+int getNumberFromUser(string message, bool startPerformanceAnalyzer) { // function to get input from user
 	cout << endl << endl << message + ": ";
 	int entry;
 	cin >> entry;
@@ -47,23 +50,37 @@ int getNumberFromUser(string message) { // function to get input from user
 		cin >> entry;
 	}
 	cout << endl;
-	pa.start(); // PERFORMANCE ANALYSIS (START HERE IMMEDIATELY AFTER TAKING INPUT FROM THE USER
+	if(startPerformanceAnalyzer) pa.start(); // PERFORMANCE ANALYSIS (START HERE IMMEDIATELY AFTER TAKING INPUT FROM THE USER)
 	return entry;
 }
 
 int mainMenu(bool performanceAnalysisMode) {
 
 	BST tree; // instantiate BST object with scope in this function
-	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE");
+	vector<int> values;
+	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE", false); // false set here because we want more control over when the pa timer will start (after vector creation and shuffling)
 	if (nodes < 1) { // check for 0 or negative cases
 		cout << endl << "Cannot add " << nodes << " nodes to the tree. Number of nodes must be greater than 0. The tree is empty.\n";
 	}
 	else {
-		cout << endl << "Adding " << nodes << " nodes with random values to the tree.\n";
+		// create the vector
+		cout << endl << "Creating a vector containing values 1 to " << nodes;
+		for (int i = 0; i < nodes; i++) {
+			values.push_back(i + 1); // add numbers 1 through nodes to the vector
+		}
+
+		// shuffle the vector
+		cout << " and shuffling it in random order." << endl;
+		auto rng = std::default_random_engine{};
+		std::shuffle(std::begin(values), std::end(values), rng);
+
+		// start performance analyzer here because it was not started on user input
+		if (performanceAnalysisMode) pa.start();
 
 		// add nodes to tree
-		for (int i = 0; i < nodes; i++) {
-			int value = ((rand()+1) * (rand()+1) + rand()); // generate really random number
+		cout << endl << "Adding " << nodes << " nodes from vector to the tree.\n";
+		for (int i = 0; i < values.size(); i++) {
+			int value = values[i];
 			cout << "\nAdding a node with value " << value << " to the tree.\n";
 			tree.AddNode(value); //  on each loop iteration to add to the tree
 		}
@@ -89,18 +106,18 @@ int mainMenu(bool performanceAnalysisMode) {
 			"9.  Print tree with Postorder Traversal (left, right, root)" << endl <<
 			"10. Delete all nodes" << endl <<
 			"0.  EXIT" << endl << endl;
-		int choice = getNumberFromUser("ENTER A CHOICE");
+		int choice = getNumberFromUser("ENTER A CHOICE", performanceAnalysisMode); // start performance analyzer only if performanceAnalysisMode is true (used for cases 7 through 10)
 		switch (choice) {
-		case 1: // new tree with specified number of nodes with random values
+		case 1: // new tree with specified number of nodes from 1 to # of nodes, shuffled in random order
 			return 1; // return 1 to run the main menu again, creating a new tree in the process (old tree will be destroyed once out of scope)
 		case 2: // print 2 children of specified node
-			tree.PrintChildNodes(getNumberFromUser("ENTER THE VALUE OF THE NODE WHOSE CHILDREN YOU'D LIKE TO PRINT"));
+			tree.PrintChildNodes(getNumberFromUser("ENTER THE VALUE OF THE NODE WHOSE CHILDREN YOU'D LIKE TO PRINT", false)); // do not start performance analyzer
 			continue;
 		case 3: // insert value into tree
-			tree.AddNode(getNumberFromUser("ENTER A VALUE TO ADD TO THE TREE"));
+			tree.AddNode(getNumberFromUser("ENTER A VALUE TO ADD TO THE TREE", false)); // do not start performance analyzer
 			continue;
 		case 4: // delete a node
-			tree.RemoveNode(getNumberFromUser("ENTER THE VALUE OF THE NODE YOU'D LIKE TO REMOVE FROM THE TREE"));
+			tree.RemoveNode(getNumberFromUser("ENTER THE VALUE OF THE NODE YOU'D LIKE TO REMOVE FROM THE TREE", false)); // do not start performance analyzer
 			continue;
 		case 5: // find minimum
 			minimum = tree.GetMinimumKey();
@@ -149,11 +166,9 @@ int mainMenu(bool performanceAnalysisMode) {
 }
 
 int main() {
-	srand(time(0)); // at program start, use time as a seed for random number generator
-
 	bool performanceAnalysisMode;
 	cout << "\nActivate performance analysis mode?\n1. yes\n2. no\n\n";
-	performanceAnalysisMode = getNumberFromUser("YOUR CHOICE") == 1 ? true : false; // set boolean for performance analysis mode based on user input
+	performanceAnalysisMode = getNumberFromUser("YOUR CHOICE", false) == 1 ? true : false; // set boolean for performance analysis mode based on user input. get number from user without starting timer
 
 
 	while(mainMenu(performanceAnalysisMode) != 0); // loop main menu until it returns a 0
