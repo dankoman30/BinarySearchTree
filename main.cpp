@@ -87,7 +87,7 @@ int mainMenu(bool performanceAnalysisMode) {
 			"7.  Print tree with Preorder Traversal (root, left, right)" << endl << 
 			"8.  Print tree with Inorder Traversal (left, root, right)" << endl <<
 			"9.  Print tree with Postorder Traversal (left, right, root)" << endl <<
-			"10. Print tree with Postorder Traversal (left, right, root)" << endl <<
+			"10. Delete all nodes" << endl <<
 			"0.  EXIT" << endl << endl;
 		int choice = getNumberFromUser("ENTER A CHOICE");
 		switch (choice) {
