@@ -81,7 +81,7 @@ int mainMenu(bool performanceAnalysisMode) {
 		cout << endl << "Adding " << nodes << " nodes from vector to the tree.\n";
 		for (int i = 0; i < values.size(); i++) {
 			int value = values[i];
-			cout << "\nAdding a node with value " << value << " to the tree.\n";
+//			cout << "\nAdding a node with value " << value << " to the tree.\n";
 			tree.AddNode(value); //  on each loop iteration to add to the tree
 		}
 
