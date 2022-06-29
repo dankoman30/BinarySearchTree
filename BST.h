@@ -8,6 +8,8 @@ private:
 		node* right;
 	};
 
+	bool performanceAnalysisMode;
+
 	node* root;
 
 	void PrivateAddNode(int key, node*  Ptr);
@@ -27,7 +29,7 @@ private:
 public:
 
 	BST();
-	~BST(); // deconstructor to avoid memleaks
+	~BST(); // deconstructor
 	void AddNode(int key);
 	void PrintInorder();
 	void PrintPreorder();
@@ -37,5 +39,6 @@ public:
 	int GetMinimumKey();
 	int GetMaximumKey();
 	void RemoveNode(int key);
+	void setPerformanceAnalysisMode(bool mode);
 
 };

@@ -57,7 +57,8 @@ int getNumberFromUser(string message, bool startPerformanceAnalyzer) { // functi
 int mainMenu(bool performanceAnalysisMode) {
 
 	BST tree; // instantiate BST object with scope in this function
-	vector<int> values;
+	tree.setPerformanceAnalysisMode(performanceAnalysisMode); // set performance enhancement mode in the tree object
+	vector<int> values; // declare vector
 	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE", false); // false set here because we want more control over when the pa timer will start (after vector creation and shuffling)
 	if (nodes < 1) { // check for 0 or negative cases
 		cout << endl << "Cannot add " << nodes << " nodes to the tree. Number of nodes must be greater than 0. The tree is empty.\n";
@@ -81,7 +82,7 @@ int mainMenu(bool performanceAnalysisMode) {
 		cout << endl << "Adding " << nodes << " nodes from vector to the tree.\n";
 		for (int i = 0; i < values.size(); i++) {
 			int value = values[i];
-//			cout << "\nAdding a node with value " << value << " to the tree.\n";
+			if (!performanceAnalysisMode) cout << "\nAdding a node with value " << value << " to the tree.\n"; // only print this on each line if performance analysis is off
 			tree.AddNode(value); //  on each loop iteration to add to the tree
 		}
 

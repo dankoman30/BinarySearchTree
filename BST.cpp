@@ -8,6 +8,8 @@ using namespace std;
 
 
 BST::BST() {
+	performanceAnalysisMode = false; // initialize performance analysis mode to false
+
 	root = NULL; // make sure root is pointing to NULL
 }
 
@@ -256,8 +258,10 @@ void BST::RemoveKeyAtRoot() { // only used for removing the root node and recons
 			root = root->right; // root's right is the new root
 			pointerToDelete->right = NULL; // disconnect old root from tree
 			delete pointerToDelete;
-//			cout << "The root node with key " << rootKey << " was deleted. " <<
-//				"The new root contains key " << root->key << endl; // inform user
+			if (!performanceAnalysisMode) { // only print if performance analysis mode is off
+				cout << "The root node with key " << rootKey << " was deleted. " <<
+					"The new root contains key " << root->key << endl; // inform user
+			}
 		}
 
 		// root node has 1 child
@@ -265,8 +269,10 @@ void BST::RemoveKeyAtRoot() { // only used for removing the root node and recons
 			root = root->left; // root's left is the new root
 			pointerToDelete->left = NULL; // disconnect old root from tree
 			delete pointerToDelete;
-//			cout << "The root node with key " << rootKey << " was deleted. " <<
-//				"The new root contains key " << root->key << endl; // inform user
+			if (!performanceAnalysisMode) { // only print if performance analysis mode is off
+				cout << "The root node with key " << rootKey << " was deleted. " <<
+					"The new root contains key " << root->key << endl; // inform user
+			}
 		}
 
 		// root node has 2 children
@@ -274,8 +280,10 @@ void BST::RemoveKeyAtRoot() { // only used for removing the root node and recons
 			minimumInRightSubtree = PrivateFindMinimum(root->right); // find the smallest in right subtree
 			PrivateRemoveNode(minimumInRightSubtree, root); // delete smallest in root's right subtree
 			root->key = minimumInRightSubtree; // overwrite root key with smallest key in its right subtree
-//			cout << "The root key containing key " << rootKey <<
-//				" was overwritten with key " << root->key << endl; // inform user
+			if (!performanceAnalysisMode) { // only print if performance analysis mode is off
+				cout << "The root key containing key " << rootKey <<
+					" was overwritten with key " << root->key << endl; // inform user
+			}
 		}
 	}
 	else { // tree is empty
@@ -296,7 +304,9 @@ void BST::RemoveKey(node* parent, node* matchingNode, bool left) {
 				parent->left = NULL : // if it's
 				parent->right = NULL;
 			delete pointerToDelete;
-//			cout << "The node containing key " << matchingNodeKey << " was removed.\n";
+			if (!performanceAnalysisMode) { // only print if performance analysis mode is off
+				cout << "The node containing key " << matchingNodeKey << " was removed.\n";
+			}
 		}
 
 		// matching node has only 1 child
@@ -305,7 +315,9 @@ void BST::RemoveKey(node* parent, node* matchingNode, bool left) {
 			matchingNode->right = NULL; // disconnect from tree
 			pointerToDelete = matchingNode; // set pointer to delete to the matchingNode
 			delete pointerToDelete; // delete it
-//			cout << "The node containing key " << matchingNodeKey << " was removed.\n";
+			if (!performanceAnalysisMode) { // only print if performance analysis mode is off
+				cout << "The node containing key " << matchingNodeKey << " was removed.\n";
+			}
 		}
 		// matching node has only 1 child
 		else if (matchingNode->left != NULL && matchingNode->right == NULL) { // left child only
@@ -313,7 +325,9 @@ void BST::RemoveKey(node* parent, node* matchingNode, bool left) {
 			matchingNode->left = NULL; // disconnect from tree
 			pointerToDelete = matchingNode; // set pointer to delete to the matchingNode
 			delete pointerToDelete; // delete it
-//			cout << "The node containing key " << matchingNodeKey << " was removed.\n";
+			if (!performanceAnalysisMode) { // only print if performance analysis mode is off
+				cout << "The node containing key " << matchingNodeKey << " was removed.\n";
+			}
 		}
 
 		// case 2 - matching node has 2 children
@@ -345,4 +359,8 @@ void BST::RemoveSubtree(node* pointer) { // post-order traversal to remove all t
 		cout << "Deleting the node containing key " << pointer->key << endl;
 		delete pointer;
 	}
+}
+
+void BST::setPerformanceAnalysisMode(bool mode) {
+	performanceAnalysisMode = mode;
 }
