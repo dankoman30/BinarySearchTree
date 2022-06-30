@@ -55,10 +55,9 @@ int getNumberFromUser(string message, bool startPerformanceAnalyzer) { // functi
 }
 
 int mainMenu(bool performanceAnalysisMode) {
-
-	BST tree; // instantiate BST object with scope in this function
-	tree.setPerformanceAnalysisMode(performanceAnalysisMode); // set performance enhancement mode in the tree object
+	BST tree(performanceAnalysisMode); // instantiate BST object with scope in this function, pass PA mode bool to its constructor
 	vector<int> values; // declare vector
+	string star; // used for PA mode
 	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE", false); // false set here because we want more control over when the pa timer will start (after vector creation and shuffling)
 	if (nodes < 1) { // check for 0 or negative cases
 		cout << endl << "Cannot add " << nodes << " nodes to the tree. Number of nodes must be greater than 0. The tree is empty.\n";
@@ -88,6 +87,10 @@ int mainMenu(bool performanceAnalysisMode) {
 
 		if (performanceAnalysisMode) {
 			pa.end(); // PERFORMANCE ANALYSIS
+			star = " *"; // asterisk to be displayed on menu options only in PA mode
+		}
+		else {
+			star = ""; // make it empty
 		}
 	}
 
@@ -96,17 +99,18 @@ int mainMenu(bool performanceAnalysisMode) {
 		int minimum, maximum; // declare minimum and maximum ints
 
 		cout << endl << "What would you like to do?" << endl <<
-			"1.  Create new tree with specified number of nodes with random values" << endl <<
+			"1.  Create new tree with specified number of nodes in random order" << star << endl <<
 			"2.  Print the two children of node with specified value" << endl <<
 			"3.  Insert a node into the tree" << endl << 
 			"4.  Delete a node from the tree" << endl << 
 			"5.  Find minimum value in the tree" << endl <<
 			"6.  Find maximum value in the tree" << endl <<
-			"7.  Print tree with Preorder Traversal (root, left, right)" << endl << 
-			"8.  Print tree with Inorder Traversal (left, root, right)" << endl <<
-			"9.  Print tree with Postorder Traversal (left, right, root)" << endl <<
-			"10. Delete all nodes" << endl <<
+			"7.  Print tree with Preorder Traversal (root, left, right)" << star << endl <<
+			"8.  Print tree with Inorder Traversal (left, root, right)" << star << endl <<
+			"9.  Print tree with Postorder Traversal (left, right, root)" << star << endl <<
+			"10. Delete all nodes" << star << endl <<
 			"0.  EXIT" << endl << endl;
+		if (performanceAnalysisMode) cout << "* (these operations are measured in Performance Analysis Mode)\n\n"; // only display this in PA mode
 		int choice = getNumberFromUser("ENTER A CHOICE", performanceAnalysisMode); // start performance analyzer only if performanceAnalysisMode is true (used for cases 7 through 10)
 		switch (choice) {
 		case 1: // new tree with specified number of nodes from 1 to # of nodes, shuffled in random order

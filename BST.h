@@ -29,6 +29,7 @@ private:
 public:
 
 	BST();
+	BST(bool performanceAnalysisMode);
 	~BST(); // deconstructor
 	void AddNode(int key);
 	void PrintInorder();
@@ -39,6 +40,5 @@ public:
 	int GetMinimumKey();
 	int GetMaximumKey();
 	void RemoveNode(int key);
-	void setPerformanceAnalysisMode(bool mode);
 
 };

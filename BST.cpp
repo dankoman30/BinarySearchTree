@@ -5,12 +5,13 @@
 
 using namespace std;
 
-
-
 BST::BST() {
-	performanceAnalysisMode = false; // initialize performance analysis mode to false
+	BST::BST(false); // if object is instantiated without a bool flag for PA mode, let's default to false
+}
 
+BST::BST(bool paOn) {
 	root = NULL; // make sure root is pointing to NULL
+	performanceAnalysisMode = paOn;
 }
 
 BST::node* BST::CreateNode(int key) {
@@ -330,7 +331,7 @@ void BST::RemoveKey(node* parent, node* matchingNode, bool left) {
 			}
 		}
 
-		// case 2 - matching node has 2 children
+		// matching node has 2 children
 		else {
 			minimumInRightSubtree = PrivateFindMinimum(matchingNode->right);
 			PrivateRemoveNode(minimumInRightSubtree, matchingNode); // start searching for key at matchingNode (the matching node)
@@ -359,8 +360,4 @@ void BST::RemoveSubtree(node* pointer) { // post-order traversal to remove all t
 		cout << "Deleting the node containing key " << pointer->key << endl;
 		delete pointer;
 	}
-}
-
-void BST::setPerformanceAnalysisMode(bool mode) {
-	performanceAnalysisMode = mode;
 }
