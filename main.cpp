@@ -38,6 +38,15 @@ public:
 
 performanceAnalyzer pa; // instantiate performance analyzer
 
+void intro() {
+	cout << "Hi, and welcome to BINARY SEARCH TREES. This application demonstrates the functionality of\n";
+	cout << "binary search trees, allowing the user to create and perform a variety of operations on a\n";
+	cout << "binary search tree.\n";
+	cout << endl << "First, please elect whether you'd like to activate performance analysis mode. When enabled,\n";
+	cout << "performance analysis mode not only limits the amount of information output to the console, but also\n";
+	cout << "enables the timing and reporting of select operations for the purpose of performance analysis!\n";
+}
+
 int getNumberFromUser(string message, bool startPerformanceAnalyzer) { // function to get input from user
 	cout << endl << endl << message + ": ";
 	int entry;
@@ -171,6 +180,7 @@ int mainMenu(bool performanceAnalysisMode) {
 }
 
 int main() {
+	intro();
 	bool performanceAnalysisMode;
 	cout << "\nActivate performance analysis mode?\n1. yes\n2. no\n\n";
 	performanceAnalysisMode = getNumberFromUser("YOUR CHOICE", false) == 1 ? true : false; // set boolean for performance analysis mode based on user input. get number from user without starting timer
