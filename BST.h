@@ -5,10 +5,11 @@
 
 using namespace std;
 
+template<typename type>
 class  BST {
 private:
 	struct node {
-		int key;
+		type key;
 		node* left;
 		node* right;
 	};
@@ -17,7 +18,7 @@ private:
 
 	node* root;
 
-	void PrivateAddNode(int key, node* pointer) {
+	void PrivateAddNode(type key, node* pointer) {
 		if (root == NULL) {
 			root = CreateNode(key); // if root is null, this is the first item in the tree (root)
 		}
@@ -102,7 +103,7 @@ private:
 		}
 	}
 
-	node* PrivateReturnNode(int key, node* pointer) {
+	node* PrivateReturnNode(type key, node* pointer) {
 		if (pointer != NULL) { // if the pointer is pointing to something
 			if (pointer->key == key) { // compare to the key we're passing in. if it's identical, we've found the node that we want
 				return pointer; // so, return the pointer that's pointing to the current node
@@ -121,7 +122,7 @@ private:
 		}
 	}
 
-	int PrivateFindMinimum(node* pointer) { // here, we are finding the smallest node in specified node's right subtree
+	type PrivateFindMinimum(node* pointer) { // here, we are finding the smallest node in specified node's right subtree
 		if (root == NULL) { // if tree is empty
 			cout << "EMPTY TREE!\n";
 			return -666;
@@ -136,7 +137,7 @@ private:
 		}
 	}
 
-	int PrivateFindMaximum(node* Ptr) { // here, we are finding the smallest node in specified node's right subtree
+	type PrivateFindMaximum(node* Ptr) { // here, we are finding the smallest node in specified node's right subtree
 		if (root == NULL) { // if tree is empty
 			cout << "EMPTY TREE!\n";
 			return -666;
@@ -151,7 +152,7 @@ private:
 		}
 	}
 
-	void PrivateRemoveNode(int key, node* parent) {
+	void PrivateRemoveNode(type key, node* parent) {
 		if (root != NULL) { // check if tree is empty
 			if (root->key == key) { // is there a matchingNode at root? if so, we need to reconstruct the tree...
 				RemoveKeyAtRoot();
@@ -180,8 +181,8 @@ private:
 	void RemoveKeyAtRoot() { // only used for removing the root node and reconstructing the tree
 		if (root != NULL) { // check for empty tree
 			node* pointerToDelete = root; // define pointer to delete as root
-			int rootKey = root->key; // get root key
-			int minimumInRightSubtree; // declare int for smallest key in right subtree (to be new root later)
+			type rootKey = root->key; // get root key
+			type minimumInRightSubtree; // declare int for smallest key in right subtree (to be new root later)
 
 			// root node has 0 children
 			if (root->left == NULL && root->right == NULL) {
@@ -230,8 +231,8 @@ private:
 	void RemoveKey(node* parent, node* matchingNode, bool left) {
 		if (root != NULL) { // verify tree isn't empty
 			node* pointerToDelete;
-			int matchingNodeKey = matchingNode->key;
-			int minimumInRightSubtree; // used if node we're deleting has 2 children
+			type matchingNodeKey = matchingNode->key;
+			type minimumInRightSubtree; // used if node we're deleting has 2 children
 
 			// no children
 			if (matchingNode->left == NULL && matchingNode->right == NULL) { // no children
@@ -279,7 +280,7 @@ private:
 
 	}
 
-	node* CreateNode(int key) {
+	node* CreateNode(type key) {
 		node* newNode = new node;
 		newNode->key = key;
 		newNode->left = NULL;
@@ -288,7 +289,7 @@ private:
 		return newNode;
 	}
 
-	node* ReturnNode(int key) {
+	node* ReturnNode(type key) {
 		return PrivateReturnNode(key, root);
 	}
 
@@ -321,7 +322,7 @@ public:
 		RemoveSubtree(root); // call remove subtree on root node
 	}
 
-	void AddNode(int key) {
+	void AddNode(type key) {
 		PrivateAddNode(key, root);
 	}
 
@@ -337,7 +338,7 @@ public:
 		PrivatePrintPostorder(root);
 	}
 
-	int GetRootKey() {
+	type GetRootKey() {
 		if (root != NULL) {
 			return root->key;
 		}
@@ -346,7 +347,7 @@ public:
 		}
 	}
 
-	void PrintChildNodes(int key) { // print the two children of the specified key
+	void PrintChildNodes(type key) { // print the two children of the specified key
 		node* pointer = ReturnNode(key); // create pointer that points to the node containing the key, if it exists
 
 		if (pointer != NULL) { // only if the key was found in the tree will pointer not be NULL
@@ -364,15 +365,15 @@ public:
 		}
 	}
 
-	int GetMinimumKey() {
+	type GetMinimumKey() {
 		return PrivateFindMinimum(root); // call find smallest with the root node
 	}
 
-	int GetMaximumKey() {
+	type GetMaximumKey() {
 		return PrivateFindMaximum(root); // call find smallest with the root node
 	}
 
-	void RemoveNode(int key) {
+	void RemoveNode(type key) {
 		PrivateRemoveNode(key, root); // start recursion at root
 	}
 

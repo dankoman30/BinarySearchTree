@@ -64,7 +64,7 @@ int getNumberFromUser(string message, bool startPerformanceAnalyzer) { // functi
 }
 
 int mainMenu(bool performanceAnalysisMode) {
-	BST tree(performanceAnalysisMode); // instantiate BST object with scope in this function, pass PA mode bool to its constructor
+	BST<int> tree(performanceAnalysisMode); // instantiate BST object from template of int typename with scope in this function, pass PA mode bool to its constructor
 	vector<int> values; // declare vector
 	string star; // used for PA mode
 	int nodes = getNumberFromUser("ENTER DESIRED NUMBER OF NODES TO ADD TO THE TREE, OR ENTER 0 FOR AN EMPTY TREE", false); // false set here because we want more control over when the pa timer will start (after vector creation and shuffling)
