@@ -301,7 +301,7 @@ void BST::RemoveKey(node* parent, node* matchingNode, bool left) {
 		// no children
 		if (matchingNode->left == NULL && matchingNode->right == NULL) { // no children
 			pointerToDelete = matchingNode;
-			left == true ? // if it's the lef t
+			left == true ? // if it's the left
 				parent->left = NULL : // if it's
 				parent->right = NULL;
 			delete pointerToDelete;
